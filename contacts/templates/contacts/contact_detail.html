@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ contact.first_name }} {{ contact.last_name }} - Contact Manager{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-4">
+        <!-- Profile Card -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                {% if contact.profile_picture %}
+                <img src="{{ contact.profile_picture.url }}" alt="{{ contact.first_name }}" 
+                     class="rounded-circle mb-3" width="150" height="150">
+                {% else %}
+                <div class="avatar-profile mb-3">
+                    <span class="avatar-initial rounded-circle bg-{{ contact.category|default:'primary' }}">
+                        {{ contact.first_name|first }}{{ contact.last_name|first }}
+                    </span>
+                </div>
+                {% endif %}
+                
+                <h3 class="mb-1">{{ contact.first_name }} {{ contact.last_name }}</h3>
+                <p class="text-muted mb-3">
+                    <span class="badge bg-{{ contact.category|default:'secondary' }}">
+                        {{ contact.get_category_display }}
+                    </span>
+                </p>
+                
+                <div class="d-flex justify-content-center mb-3">
+                    <a href="tel:{{ contact.phone_number }}" class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-phone me-1"></i> Call
+                    </a>
+                    <a href="mailto:{{ contact.email }}" class="btn btn-outline-success btn-sm me-2">
+                        <i class="fas fa-envelope me-1"></i> Email
+                    </a>
+                    <a href="{% url 'contact_update' contact.pk %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-edit me-1"></i> Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h6 class="mb-0">Quick Actions</h6>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'contact_update' contact.pk %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-edit text-primary me-2"></i> Edit Contact
+                    </a>
+                    <a href="{% url 'contact_delete' contact.pk %}" class="list-group-item list-group-item-action text-danger">
+                        <i class="fas fa-trash me-2"></i> Delete Contact
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-8">
+        <!-- Contact Details Card -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h6 class="mb-0">Contact Information</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-3">Basic Info</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <span class="text-muted"><i class="fas fa-user me-2"></i>Full Name</span>
+                                <p class="mb-0">{{ contact.first_name }} {{ contact.last_name }}</p>
+                            </li>
+                            <li class="mb-3">
+                                <span class="text-muted"><i class="fas fa-tag me-2"></i>Category</span>
+                                <p class="mb-0">{{ contact.get_category_display }}</p>
+                            </li>
+                            <li class="mb-3">
+                                <span class="text-muted"><i class="fas fa-calendar-plus me-2"></i>Created</span>
+                                <p class="mb-0">{{ contact.created_at|date:"M d, Y" }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-3">Contact Details</h6>
+                        <ul class="list-unstyled">
+                            {% if contact.phone_number %}
+                            <li class="mb-3">
+                                <span class="text-muted"><i class="fas fa-phone me-2"></i>Phone</span>
+                                <p class="mb-0">{{ contact.phone_number }}</p>
+                            </li>
+                            {% endif %}
+                            {% if contact.email %}
+                            <li class="mb-3">
+                                <span class="text-muted"><i class="fas fa-envelope me-2"></i>Email</span>
+                                <p class="mb-0">{{ contact.email }}</p>
+                            </li>
+                            {% endif %}
+                            {% if contact.address %}
+                            <li class="mb-3">
+                                <span class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Address</span>
+                                <p class="mb-0">{{ contact.address|linebreaks }}</p>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                
+                {% if contact.notes %}
+                <div class="mt-4">
+                    <h6 class="text-muted mb-3">Notes</h6>
+                    <div class="bg-light p-3 rounded">
+                        {{ contact.notes|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Activity Timeline -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h6 class="mb-0">Activity</h6>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon bg-success">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <p class="mb-1 fw-bold">Contact Created</p>
+                            <small class="text-muted">{{ contact.created_at|timesince }} ago</small>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon bg-primary">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <p class="mb-1 fw-bold">Last Updated</p>
+                            <small class="text-muted">{{ contact.updated_at|timesince }} ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Contact Manager{% endblock %}
+
+{% block content %}
+<div class="text-center" style="padding: 4rem 2rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">
+        Your Contacts, Organized
+    </h1>
+    
+    <p style="font-size: 1.2rem; margin-bottom: 3rem; color: #666;">
+        The simplest way to manage all your contacts in one place.
+    </p>
+
+    <div style="margin-bottom: 3rem;">
+        <a href="{% url 'contact_list' %}" class="btn btn-primary" style="margin-right: 1rem;">
+            View Contacts
+        </a>
+        <a href="{% url 'contact_create' %}" class="btn btn-primary" style="margin-right: 1rem;">
+            Add Contact
+        </a>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 2rem; color: #666;">
+        <div style="text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⚡</div>
+            <p>Fast</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔒</div>
+            <p>Secure</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
+            <p>Simple</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn-glow {
+        background: linear-gradient(45deg, #4CAF50, #2196F3);
+        border: none;
+        color: white;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+    }
+
+    .btn-glow:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6);
+    }
+
+    .btn-outline-glass {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        border-radius: 50px;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-glass:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-3px);
+    }
+
+    .gradient-text {
+        background: linear-gradient(45deg, #4CAF50, #2196F3);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-text {
+        opacity: 0;
+        animation: fadeInUp 1s ease forwards;
+    }
+
+    .animate-text-delay {
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.3s forwards;
+    }
+
+    .animate-text-delay-2 {
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.6s forwards;
+    }
+
+    .animate-buttons {
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.9s forwards;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80 },
+            color: { value: '#ffffff' },
+            shape: { type: 'circle' },
+            opacity: { value: 0.5 },
+            size: { value: 3 },
+            move: {
+                enable: true,
+                speed: 2
+            }
+        }
+    });
+</script>
+{% endblock %}
